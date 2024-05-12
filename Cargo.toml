@@ -2,6 +2,8 @@
 name = "egov_law_abb"
 version = "0.1.0"
 edition = "2021"
+authors = ["Naoki Kaneko <puripuri2100@gmail.com>"]
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -10,8 +12,6 @@ anyhow = "1.0.71"
 clap = { version = "4.3.0", features = ["derive"] }
 reqwest = "0.11.18"
 scraper = "0.16.0"
-serde = { version = "1.0.163", features = ["derive"] }
 serde_json = "1.0.96"
 tokio = { version = "1.28.1", features = ["full"] }
-tracing = "0.1.37"
-tracing-subscriber = "0.3.17"
+jplaw_data_types = { git = "https://github.com/japanese-law-analysis/jplaw_tools.git", rev = "0f50d09" }

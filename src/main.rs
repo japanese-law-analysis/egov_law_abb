@@ -28,21 +28,15 @@
 
 use anyhow::Result;
 use clap::Parser;
+use jplaw_data_types::listup::AbbInfo;
 use scraper::{Html, Selector};
-use serde::{Deserialize, Serialize};
 use tokio::{fs::File, io::AsyncWriteExt};
-
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
-struct Abb {
-  num: String,
-  abbs: Vec<String>,
-}
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
   #[clap(short, long)]
-  output: String,
+  index: String,
 }
 
 #[tokio::main]
@@ -72,7 +66,7 @@ async fn main() -> Result<()> {
         }
       }
     }
-    lst.push(Abb {
+    lst.push(AbbInfo {
       num: tmp_num,
       abbs: l,
     });
@@ -81,8 +75,9 @@ async fn main() -> Result<()> {
 
   let abb_lst_str = serde_json::to_string_pretty(&lst)?;
 
-  let mut f = File::create(&args.output).await?;
+  let mut f = File::create(&args.index).await?;
   f.write_all(abb_lst_str.as_bytes()).await?;
+  f.flush().await?;
 
   Ok(())
 }
